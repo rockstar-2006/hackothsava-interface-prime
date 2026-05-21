@@ -55,10 +55,10 @@ function PrizesPage() {
         <div className="mx-auto max-w-[1400px] px-6 py-20">
           <SectionTag id="// 03" label="Compensation Schedule" />
           <div className="mt-6 grid items-end gap-8 md:grid-cols-12">
-            <h1 className="md:col-span-7 font-display text-6xl font-bold leading-[0.92] tracking-tight md:text-8xl">
+            <h1 className="md:col-span-7 font-comic text-6xl leading-[0.9] md:text-8xl">
               PRIZE POOL
               <br />
-              <span className="text-primary text-glow">₹8.25L+</span>
+              <span className="font-splash text-[1.15em] text-primary text-ink-stroke">₹8.25L+!</span>
             </h1>
             <p className="md:col-span-5 font-display text-base leading-relaxed text-muted-foreground">
               Cash, credits, hardware, and a permanent slot in the partner pipeline. Four tracks, one
@@ -83,7 +83,7 @@ function PrizesPage() {
                   <span>// {p.rank}</span>
                   <HudCrosshair className="h-3 w-3" />
                 </div>
-                <div className="mt-10 font-display text-5xl font-bold leading-none tracking-tight md:text-6xl">
+                <div className="mt-10 font-comic text-5xl leading-none md:text-6xl">
                   {p.amount}
                 </div>
                 <div className="mt-3 font-display text-lg font-semibold tracking-tight">{p.title}</div>
@@ -100,10 +100,10 @@ function PrizesPage() {
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
               <SectionTag id="// 03.B" label="Mission Domains" />
-              <h2 className="mt-4 font-display text-5xl font-bold leading-[0.95] tracking-tight md:text-6xl">
+              <h2 className="mt-4 font-comic text-5xl leading-[0.92] md:text-6xl">
                 FOUR
                 <br />
-                <span className="text-primary text-glow">TRACKS_</span>
+                <span className="font-splash text-[1.15em] text-primary text-ink-stroke">TRACKS!</span>
               </h2>
             </div>
             <p className="max-w-sm font-display text-base leading-relaxed text-muted-foreground">

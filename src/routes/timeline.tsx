@@ -53,10 +53,10 @@ function TimelinePage() {
         <div className="mx-auto max-w-[1400px] px-6 py-20">
           <SectionTag id="// 02" label="Operational Roadmap" />
           <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
-            <h1 className="font-display text-6xl font-bold leading-[0.92] tracking-tight md:text-8xl">
+            <h1 className="font-comic text-6xl leading-[0.9] md:text-8xl">
               THE
               <br />
-              <span className="text-primary text-glow">ROADMAP_</span>
+              <span className="font-splash text-[1.15em] text-primary text-ink-stroke">ROADMAP!</span>
             </h1>
             <p className="max-w-sm font-display text-base leading-relaxed text-muted-foreground">
               Four phases. Each one a checkpoint on the path from idea to ship. Track your position on the grid.

@@ -51,10 +51,10 @@ function FAQPage() {
         <div className="mx-auto max-w-[1400px] px-6 py-20">
           <SectionTag id="// 05" label="Signal Repository" />
           <div className="mt-6 grid items-end gap-8 md:grid-cols-12">
-            <h1 className="md:col-span-7 font-display text-6xl font-bold leading-[0.92] tracking-tight md:text-8xl">
+            <h1 className="md:col-span-7 font-comic text-6xl leading-[0.9] md:text-8xl">
               QUERIES
               <br />
-              <span className="text-primary text-glow">/ANSWERED_</span>
+              <span className="font-splash text-[1.15em] text-primary text-ink-stroke">/ANSWERED!</span>
             </h1>
             <p className="md:col-span-5 font-display text-base leading-relaxed text-muted-foreground">
               The shortlist. If your question isn't in the log, ping ops on Discord — humans answer there in under an hour.
