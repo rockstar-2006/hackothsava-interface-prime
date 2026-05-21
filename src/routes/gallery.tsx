@@ -34,10 +34,10 @@ function GalleryPage() {
         <div className="mx-auto max-w-[1400px] px-6 py-20">
           <SectionTag id="// 04" label="Archive · Past Cycles" />
           <div className="mt-6 grid items-end gap-8 md:grid-cols-12">
-            <h1 className="md:col-span-7 font-display text-6xl font-bold leading-[0.92] tracking-tight md:text-8xl">
+            <h1 className="md:col-span-7 font-comic text-6xl leading-[0.9] md:text-8xl">
               FROM THE
               <br />
-              <span className="text-primary text-glow">FLOOR_</span>
+              <span className="font-splash text-[1.15em] text-primary text-ink-stroke">FLOOR!</span>
             </h1>
             <p className="md:col-span-5 font-display text-base leading-relaxed text-muted-foreground">
               Stills from past sprints — late-night commits, midnight pitches,
@@ -80,10 +80,10 @@ function GalleryPage() {
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
               <SectionTag id="// 04.B" label="Supply Lines" />
-              <h2 className="mt-4 font-display text-5xl font-bold leading-[0.95] tracking-tight md:text-6xl">
+              <h2 className="mt-4 font-comic text-5xl leading-[0.92] md:text-6xl">
                 SPONSOR
                 <br />
-                <span className="text-primary text-glow">TIERS_</span>
+                <span className="font-splash text-[1.15em] text-primary text-ink-stroke">TIERS!</span>
               </h2>
             </div>
             <p className="max-w-sm font-display text-base leading-relaxed text-muted-foreground">

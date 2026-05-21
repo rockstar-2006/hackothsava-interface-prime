@@ -19,22 +19,22 @@ export function HudFrame({
   className = "",
   ...rest
 }: FrameProps) {
-  const borderColor =
+  const borderClass =
     tone === "accent"
-      ? "border-primary/60"
-      : "border-border";
+      ? "border-2 border-foreground comic-shadow"
+      : "border-2 border-foreground/85";
   return (
     <div
-      className={`relative border ${borderColor} bg-card/40 ${className}`}
+      className={`relative ${borderClass} bg-card/60 ${className}`}
       {...rest}
     >
       {/* corner brackets */}
-      <span className="pointer-events-none absolute -left-px -top-px h-3 w-3 border-l border-t border-primary" />
-      <span className="pointer-events-none absolute -right-px -top-px h-3 w-3 border-r border-t border-primary" />
-      <span className="pointer-events-none absolute -bottom-px -left-px h-3 w-3 border-b border-l border-primary" />
-      <span className="pointer-events-none absolute -bottom-px -right-px h-3 w-3 border-b border-r border-primary" />
+      <span className="pointer-events-none absolute -left-[3px] -top-[3px] h-3.5 w-3.5 border-l-2 border-t-2 border-primary" />
+      <span className="pointer-events-none absolute -right-[3px] -top-[3px] h-3.5 w-3.5 border-r-2 border-t-2 border-primary" />
+      <span className="pointer-events-none absolute -bottom-[3px] -left-[3px] h-3.5 w-3.5 border-b-2 border-l-2 border-primary" />
+      <span className="pointer-events-none absolute -bottom-[3px] -right-[3px] h-3.5 w-3.5 border-b-2 border-r-2 border-primary" />
       {(serial || label) && (
-        <div className="flex items-center justify-between border-b border-border/60 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+        <div className="flex items-center justify-between border-b-2 border-foreground/80 bg-foreground/[0.04] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
           <span>{label}</span>
           <span>{serial}</span>
         </div>
@@ -98,14 +98,12 @@ export function HudButton({
 }) {
   const styles =
     variant === "primary"
-      ? "bg-primary text-primary-foreground hover:shadow-[0_0_40px_-6px_var(--color-primary)]"
-      : "bg-transparent text-foreground hover:bg-primary/10 hover:text-primary";
+      ? "bg-primary text-primary-foreground comic-shadow-ink hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0_0_var(--ink)]"
+      : "bg-background text-foreground comic-shadow hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0_0_var(--color-primary)]";
   const base =
-    "group relative inline-flex items-center gap-3 border border-primary/70 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.25em] transition-all duration-200 hover:-translate-y-px";
+    "group relative inline-flex items-center gap-3 border-2 border-foreground px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-[0.22em] transition-all duration-150";
   const inner = (
     <>
-      <span className="pointer-events-none absolute -left-[3px] top-1/2 h-1.5 w-1.5 -translate-y-1/2 bg-primary" />
-      <span className="pointer-events-none absolute -right-[3px] top-1/2 h-1.5 w-1.5 -translate-y-1/2 bg-primary" />
       {children}
     </>
   );
@@ -134,11 +132,56 @@ export function HudButton({
 
 export function SectionTag({ id, label }: { id: string; label: string }) {
   return (
-    <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
-      <span className="inline-block h-1.5 w-1.5 bg-primary" />
+    <div className="inline-flex items-center gap-3 border-2 border-foreground bg-primary px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-primary-foreground comic-shadow-ink">
+      <span className="inline-block h-1.5 w-1.5 bg-primary-foreground" />
       <span>{id}</span>
-      <span className="h-px w-8 bg-primary/60" />
-      <span className="text-muted-foreground">{label}</span>
+      <span className="h-px w-6 bg-primary-foreground/60" />
+      <span>{label}</span>
     </div>
+  );
+}
+
+/**
+ * Comic-book burst / starburst splash with text inside.
+ * Use for "POW" style accents.
+ */
+export function Splash({
+  children,
+  rotate = -8,
+  className = "",
+}: {
+  children: ReactNode;
+  rotate?: number;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`relative inline-grid place-items-center ${className}`}
+      style={{ transform: `rotate(${rotate}deg)` }}
+    >
+      <svg viewBox="0 0 200 200" className="absolute inset-0 h-full w-full" aria-hidden>
+        <polygon
+          points="100,2 118,28 150,12 150,46 186,52 162,80 198,98 162,118 186,148 150,154 150,188 118,172 100,198 82,172 50,188 50,154 14,148 38,118 2,98 38,80 14,52 50,46 50,12 82,28"
+          fill="var(--color-primary)"
+          stroke="var(--ink)"
+          strokeWidth="4"
+          strokeLinejoin="round"
+        />
+      </svg>
+      <span className="relative font-splash text-2xl text-primary-foreground">
+        {children}
+      </span>
+    </div>
+  );
+}
+
+/** Speech-bubble style label. */
+export function SpeechTag({ children }: { children: ReactNode }) {
+  return (
+    <span className="relative inline-block border-2 border-foreground bg-background px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] comic-shadow-ink">
+      {children}
+      <span className="absolute -bottom-[10px] left-6 h-0 w-0 border-l-[10px] border-r-[6px] border-t-[10px] border-l-transparent border-r-transparent border-t-foreground" />
+      <span className="absolute -bottom-[7px] left-[26px] h-0 w-0 border-l-[7px] border-r-[4px] border-t-[7px] border-l-transparent border-r-transparent border-t-background" />
+    </span>
   );
 }
