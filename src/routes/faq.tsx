@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteLayout } from "@/components/site-layout";
-import { HudButton, HudCrosshair, SectionTag } from "@/components/hud";
+import { HudButton, HudCrosshair, HudFrame, SectionTag } from "@/components/hud";
+import illo from "@/assets/track-ai.jpg";
 
 export const Route = createFileRoute("/faq")({
   component: FAQPage,
@@ -48,17 +49,35 @@ function FAQPage() {
   return (
     <SiteLayout>
       <section className="border-b border-border/60">
-        <div className="mx-auto max-w-[1400px] px-6 py-20">
-          <SectionTag id="// 05" label="Signal Repository" />
-          <div className="mt-6 grid items-end gap-8 md:grid-cols-12">
-            <h1 className="md:col-span-7 font-comic text-6xl leading-[0.9] md:text-8xl">
-              QUERIES
-              <br />
-              <span className="font-splash text-[1.15em] text-primary text-ink-stroke">/ANSWERED!</span>
-            </h1>
-            <p className="md:col-span-5 font-display text-base leading-relaxed text-muted-foreground">
-              The shortlist. If your question isn't in the log, ping ops on Discord — humans answer there in under an hour.
-            </p>
+        <div className="relative overflow-hidden">
+          <div className="bg-halftone pointer-events-none absolute inset-0 opacity-20" />
+          <div className="relative mx-auto max-w-[1400px] px-6 py-20">
+            <SectionTag id="// 05" label="Signal Repository" />
+            <div className="mt-6 grid items-end gap-10 md:grid-cols-12">
+              <div className="md:col-span-7">
+                <h1 className="font-comic text-6xl leading-[0.9] md:text-8xl">
+                  QUERIES
+                  <br />
+                  <span className="font-splash text-[1.15em] text-primary text-ink-stroke">/ANSWERED!</span>
+                </h1>
+                <p className="mt-6 max-w-md font-display text-base leading-relaxed text-muted-foreground">
+                  The shortlist. If your question isn't in the log, ping ops on Discord — humans answer there in under an hour.
+                </p>
+              </div>
+              <div className="md:col-span-5">
+                <HudFrame label="// COMMS" serial="CH · OPS-LINK" className="comic-shadow">
+                  <div className="relative aspect-[5/4] overflow-hidden">
+                    <img src={illo} alt="" aria-hidden className="h-full w-full object-cover" />
+                    <div className="bg-halftone pointer-events-none absolute inset-0 opacity-40 mix-blend-multiply" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-background/70 via-transparent to-transparent" />
+                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
+                      <span>INBOX · LIVE</span>
+                      <HudCrosshair className="h-3 w-3" />
+                    </div>
+                  </div>
+                </HudFrame>
+              </div>
+            </div>
           </div>
         </div>
       </section>

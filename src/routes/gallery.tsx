@@ -31,18 +31,27 @@ function GalleryPage() {
   return (
     <SiteLayout>
       <section className="border-b border-border/60">
-        <div className="mx-auto max-w-[1400px] px-6 py-20">
-          <SectionTag id="// 04" label="Archive · Past Cycles" />
-          <div className="mt-6 grid items-end gap-8 md:grid-cols-12">
-            <h1 className="md:col-span-7 font-comic text-6xl leading-[0.9] md:text-8xl">
-              FROM THE
-              <br />
-              <span className="font-splash text-[1.15em] text-primary text-ink-stroke">FLOOR!</span>
-            </h1>
-            <p className="md:col-span-5 font-display text-base leading-relaxed text-muted-foreground">
-              Stills from past sprints — late-night commits, midnight pitches,
-              and the moment a build finally compiles. The grid remembers.
-            </p>
+        <div className="relative overflow-hidden">
+          <img
+            src={g6}
+            alt=""
+            aria-hidden
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.14] mix-blend-luminosity"
+          />
+          <div className="bg-halftone-dense pointer-events-none absolute inset-0 opacity-20" />
+          <div className="relative mx-auto max-w-[1400px] px-6 py-20">
+            <SectionTag id="// 04" label="Archive · Past Cycles" />
+            <div className="mt-6 grid items-end gap-8 md:grid-cols-12">
+              <h1 className="md:col-span-7 font-comic text-6xl leading-[0.9] md:text-8xl">
+                FROM THE
+                <br />
+                <span className="font-splash text-[1.15em] text-primary text-ink-stroke">FLOOR!</span>
+              </h1>
+              <p className="md:col-span-5 font-display text-base leading-relaxed text-muted-foreground">
+                Stills from past sprints — late-night commits, midnight pitches,
+                and the moment a build finally compiles. The grid remembers.
+              </p>
+            </div>
           </div>
         </div>
       </section>

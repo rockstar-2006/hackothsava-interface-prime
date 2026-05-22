@@ -1,6 +1,8 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { HudButton, HudCrosshair } from "./hud";
+import heroCitadel from "@/assets/hero-citadel.jpg";
+import galleryBg from "@/assets/gallery-3.jpg";
 
 const NAV = [
   { to: "/", label: "Index" },
@@ -70,8 +72,26 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <footer className="mt-32 border-t border-border/60">
-      <div className="mx-auto max-w-[1400px] px-6 py-16">
+    <footer className="relative mt-32 overflow-hidden border-t-2 border-foreground">
+      {/* Background illustration */}
+      <div className="pointer-events-none absolute inset-0 -z-0">
+        <img
+          src={heroCitadel}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover opacity-[0.12] mix-blend-luminosity"
+        />
+        <img
+          src={galleryBg}
+          alt=""
+          aria-hidden
+          className="absolute -right-20 bottom-0 h-[420px] w-[520px] object-cover opacity-[0.10] mix-blend-screen"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/70" />
+        <div className="bg-halftone-dense absolute inset-0 opacity-[0.18]" />
+        <div className="bg-scan absolute inset-0 opacity-60" />
+      </div>
+      <div className="relative mx-auto max-w-[1400px] px-6 py-16">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
             <div className="font-display text-4xl font-bold leading-none tracking-tight md:text-6xl">

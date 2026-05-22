@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site-layout";
 import { HudFrame, SectionTag, HudCrosshair } from "@/components/hud";
+import illo from "@/assets/track-fullstack.jpg";
 
 export const Route = createFileRoute("/timeline")({
   component: TimelinePage,
@@ -50,17 +51,33 @@ function TimelinePage() {
     <SiteLayout>
       <section className="border-b border-border/60">
         <div className="bg-grid absolute inset-x-0 top-16 -z-10 h-[600px] opacity-30" />
+        <div className="bg-halftone pointer-events-none absolute inset-0 opacity-20" />
         <div className="mx-auto max-w-[1400px] px-6 py-20">
           <SectionTag id="// 02" label="Operational Roadmap" />
-          <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
-            <h1 className="font-comic text-6xl leading-[0.9] md:text-8xl">
-              THE
-              <br />
-              <span className="font-splash text-[1.15em] text-primary text-ink-stroke">ROADMAP!</span>
-            </h1>
-            <p className="max-w-sm font-display text-base leading-relaxed text-muted-foreground">
-              Four phases. Each one a checkpoint on the path from idea to ship. Track your position on the grid.
-            </p>
+          <div className="mt-6 grid items-end gap-10 md:grid-cols-12">
+            <div className="md:col-span-7">
+              <h1 className="font-comic text-6xl leading-[0.9] md:text-8xl">
+                THE
+                <br />
+                <span className="font-splash text-[1.15em] text-primary text-ink-stroke">ROADMAP!</span>
+              </h1>
+              <p className="mt-6 max-w-sm font-display text-base leading-relaxed text-muted-foreground">
+                Four phases. Each one a checkpoint on the path from idea to ship. Track your position on the grid.
+              </p>
+            </div>
+            <div className="md:col-span-5">
+              <HudFrame label="// SCHEMATIC" serial="ROAD · 04-PHASE" className="comic-shadow">
+                <div className="relative aspect-[5/4] overflow-hidden">
+                  <img src={illo} alt="" aria-hidden className="h-full w-full object-cover" />
+                  <div className="bg-halftone pointer-events-none absolute inset-0 opacity-40 mix-blend-multiply" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-background/70 via-transparent to-transparent" />
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
+                    <span>ROUTE · A→Z</span>
+                    <HudCrosshair className="h-3 w-3" />
+                  </div>
+                </div>
+              </HudFrame>
+            </div>
           </div>
         </div>
       </section>

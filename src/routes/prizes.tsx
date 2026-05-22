@@ -5,6 +5,7 @@ import trackAi from "@/assets/track-ai.jpg";
 import trackWeb3 from "@/assets/track-web3.jpg";
 import trackFs from "@/assets/track-fullstack.jpg";
 import trackIot from "@/assets/track-iot.jpg";
+import heroCitadel from "@/assets/hero-citadel.jpg";
 
 export const Route = createFileRoute("/prizes")({
   component: PrizesPage,
@@ -52,18 +53,27 @@ function PrizesPage() {
   return (
     <SiteLayout>
       <section className="border-b border-border/60">
-        <div className="mx-auto max-w-[1400px] px-6 py-20">
-          <SectionTag id="// 03" label="Compensation Schedule" />
-          <div className="mt-6 grid items-end gap-8 md:grid-cols-12">
-            <h1 className="md:col-span-7 font-comic text-6xl leading-[0.9] md:text-8xl">
-              PRIZE POOL
-              <br />
-              <span className="font-splash text-[1.15em] text-primary text-ink-stroke">₹8.25L+!</span>
-            </h1>
-            <p className="md:col-span-5 font-display text-base leading-relaxed text-muted-foreground">
-              Cash, credits, hardware, and a permanent slot in the partner pipeline. Four tracks, one
-              grand prize, and a track-best for every domain on the grid.
-            </p>
+        <div className="relative overflow-hidden">
+          <img
+            src={heroCitadel}
+            alt=""
+            aria-hidden
+            className="pointer-events-none absolute -right-32 top-1/2 hidden h-[120%] w-[55%] -translate-y-1/2 object-cover opacity-[0.18] mix-blend-luminosity md:block"
+          />
+          <div className="bg-halftone pointer-events-none absolute inset-0 opacity-20" />
+          <div className="relative mx-auto max-w-[1400px] px-6 py-20">
+            <SectionTag id="// 03" label="Compensation Schedule" />
+            <div className="mt-6 grid items-end gap-8 md:grid-cols-12">
+              <h1 className="md:col-span-7 font-comic text-6xl leading-[0.9] md:text-8xl">
+                PRIZE POOL
+                <br />
+                <span className="font-splash text-[1.15em] text-primary text-ink-stroke">₹8.25L+!</span>
+              </h1>
+              <p className="md:col-span-5 font-display text-base leading-relaxed text-muted-foreground">
+                Cash, credits, hardware, and a permanent slot in the partner pipeline. Four tracks, one
+                grand prize, and a track-best for every domain on the grid.
+              </p>
+            </div>
           </div>
         </div>
       </section>
