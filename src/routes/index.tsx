@@ -57,10 +57,10 @@ function Index() {
             <div className="lg:col-span-7">
               <SectionTag id="// 00" label="Annual Build Cycle — Spring 2026" />
               <h1 className="mt-8 font-comic leading-[0.86] tracking-tight">
-                <span className="block whitespace-nowrap text-comic-shadow text-[clamp(2.2rem,8.2vw,7.5rem)]">
-                  HACK<span className="text-primary">OTH</span><span className="font-splash text-[1.1em] text-primary text-ink-stroke">SAVA</span>
+                <span className="block text-comic-shadow text-[clamp(2rem,6.4vw,5.6rem)]">
+                  HACK<span className="text-primary">OTH</span><span className="font-splash text-[1.05em] text-primary text-ink-stroke">SAVA</span>
                 </span>
-                <span className="mt-2 block font-comic text-[clamp(1.6rem,4vw,3rem)] text-muted-foreground">
+                <span className="mt-2 block font-comic text-[clamp(1.4rem,3.2vw,2.6rem)] text-muted-foreground">
                   .2K26
                 </span>
               </h1>
