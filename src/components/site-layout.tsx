@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import { HudButton, HudCrosshair } from "./hud";
 import heroCitadel from "@/assets/hero-citadel.jpg";
 import galleryBg from "@/assets/gallery-3.jpg";
+import trackWeb3 from "@/assets/track-web3.jpg";
+import trackIot from "@/assets/track-iot.jpg";
 
 const NAV = [
   { to: "/", label: "Index" },
@@ -79,17 +81,51 @@ export function SiteFooter() {
           src={heroCitadel}
           alt=""
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover opacity-[0.12] mix-blend-luminosity"
+          className="absolute inset-0 h-full w-full object-cover opacity-[0.32] mix-blend-luminosity contrast-125 saturate-0"
         />
         <img
           src={galleryBg}
           alt=""
           aria-hidden
-          className="absolute -right-20 bottom-0 h-[420px] w-[520px] object-cover opacity-[0.10] mix-blend-screen"
+          className="absolute -right-32 -bottom-10 h-[520px] w-[620px] object-cover opacity-[0.28] mix-blend-screen contrast-125"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/70" />
-        <div className="bg-halftone-dense absolute inset-0 opacity-[0.18]" />
+        <img
+          src={trackWeb3}
+          alt=""
+          aria-hidden
+          className="absolute -left-24 -bottom-16 h-[460px] w-[540px] object-cover opacity-[0.22] mix-blend-screen contrast-125 saturate-150 -rotate-3"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/40" />
+        <div className="bg-halftone-dense absolute inset-0 opacity-[0.35] mix-blend-multiply" />
         <div className="bg-scan absolute inset-0 opacity-60" />
+        {/* Comic burst graphic */}
+        <svg
+          aria-hidden
+          viewBox="0 0 200 200"
+          className="absolute -right-10 top-10 h-64 w-64 opacity-30"
+        >
+          <polygon
+            points="100,4 118,32 152,16 148,54 192,60 162,90 196,118 156,124 168,164 128,158 120,196 100,168 80,196 72,158 32,164 44,124 4,118 38,90 8,60 52,54 48,16 82,32"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="text-primary"
+          />
+        </svg>
+        <svg
+          aria-hidden
+          viewBox="0 0 200 200"
+          className="absolute -left-16 top-1/2 h-72 w-72 -translate-y-1/2 opacity-25"
+        >
+          <polygon
+            points="100,10 112,40 150,30 140,68 184,72 158,100 188,128 150,128 158,168 122,156 110,190 100,164 90,190 78,156 42,168 50,128 12,128 42,100 16,72 60,68 50,30 88,40"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeDasharray="4 4"
+            className="text-foreground"
+          />
+        </svg>
       </div>
       <div className="relative mx-auto max-w-[1400px] px-6 py-16">
         <div className="grid gap-12 md:grid-cols-12">
