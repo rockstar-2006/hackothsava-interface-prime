@@ -2,6 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site-layout";
 import { HudFrame, SectionTag, HudCrosshair, Splash, SpeechTag } from "@/components/hud";
 import illo from "@/assets/track-fullstack.jpg";
+import trackAi from "@/assets/track-ai.jpg";
+import trackWeb3 from "@/assets/track-web3.jpg";
+import trackIot from "@/assets/track-iot.jpg";
+import gallery2 from "@/assets/gallery-2.jpg";
+import gallery4 from "@/assets/gallery-4.jpg";
+import gallery5 from "@/assets/gallery-5.jpg";
+import gallery6 from "@/assets/gallery-6.jpg";
+import heroCitadel from "@/assets/hero-citadel.jpg";
 
 export const Route = createFileRoute("/timeline")({
   component: TimelinePage,
@@ -18,17 +26,18 @@ type Hour = {
   status: Status;
   splash?: string;  // optional sound effect
   tag?: string;     // optional speech tag
+  image: string;    // comic illustration for this checkpoint
 };
 
 const HOURS: Hour[] = [
-  { h: "00H", clock: "09:00", code: "OPS·BOOT", title: "Kickoff & Squad Check-In", body: "Doors open, badges scanned, swag dropped. Opening keynote at 09:30 sharp — no respawns.", status: "done", splash: "BOOM!", tag: "// DAY 01" },
-  { h: "03H", clock: "12:00", code: "IDE·LOCK", title: "Ideation Lock-In", body: "Squads commit to a problem statement. Mentors roam the floor. Last chance to pivot scope.", status: "done" },
-  { h: "06H", clock: "15:00", code: "CHK·01", title: "Checkpoint Alpha", body: "First architecture review. Wireframes, data shape, and a working hello-world from each team.", status: "live", splash: "PING!" },
-  { h: "10H", clock: "19:00", code: "FUEL·DROP", title: "Dinner & Mentor Rotation", body: "Hot meals on the floor. Senior engineers from partner labs cycle through every table.", status: "next" },
-  { h: "14H", clock: "23:00", code: "DEEP·NIGHT", title: "Deep Night Sprint", body: "The grid goes quiet. Focus mode. Lo-fi station goes live in the chill zone.", status: "future", tag: "// DAY 02" },
-  { h: "18H", clock: "03:00", code: "CHK·02", title: "Checkpoint Bravo", body: "Mid-build review. Show working core features. Mentors flag blockers before sunrise.", status: "future", splash: "PIVOT!" },
-  { h: "22H", clock: "07:00", code: "POLISH", title: "Polish & Demo Prep", body: "UI sweep, README, deploy. Record a 60s backup demo in case the demo gods misbehave.", status: "future" },
-  { h: "24H", clock: "09:00", code: "FREEZE", title: "Code Freeze & Demo Day", body: "Repos locked. Stage opens. Top 8 take the mic for a 6-minute pitch. Winners crowned by noon.", status: "future", splash: "SHIP IT!" },
+  { h: "00H", clock: "09:00", code: "OPS·BOOT", title: "Kickoff & Squad Check-In", body: "Doors open, badges scanned, swag dropped. Opening keynote at 09:30 sharp — no respawns.", status: "done", splash: "BOOM!", tag: "// DAY 01", image: heroCitadel },
+  { h: "03H", clock: "12:00", code: "IDE·LOCK", title: "Ideation Lock-In", body: "Squads commit to a problem statement. Mentors roam the floor. Last chance to pivot scope.", status: "done", image: gallery2 },
+  { h: "06H", clock: "15:00", code: "CHK·01", title: "Checkpoint Alpha", body: "First architecture review. Wireframes, data shape, and a working hello-world from each team.", status: "live", splash: "PING!", image: trackAi },
+  { h: "10H", clock: "19:00", code: "FUEL·DROP", title: "Dinner & Mentor Rotation", body: "Hot meals on the floor. Senior engineers from partner labs cycle through every table.", status: "next", image: gallery4 },
+  { h: "14H", clock: "23:00", code: "DEEP·NIGHT", title: "Deep Night Sprint", body: "The grid goes quiet. Focus mode. Lo-fi station goes live in the chill zone.", status: "future", tag: "// DAY 02", image: trackWeb3 },
+  { h: "18H", clock: "03:00", code: "CHK·02", title: "Checkpoint Bravo", body: "Mid-build review. Show working core features. Mentors flag blockers before sunrise.", status: "future", splash: "PIVOT!", image: gallery5 },
+  { h: "22H", clock: "07:00", code: "POLISH", title: "Polish & Demo Prep", body: "UI sweep, README, deploy. Record a 60s backup demo in case the demo gods misbehave.", status: "future", image: trackIot },
+  { h: "24H", clock: "09:00", code: "FREEZE", title: "Code Freeze & Demo Day", body: "Repos locked. Stage opens. Top 8 take the mic for a 6-minute pitch. Winners crowned by noon.", status: "future", splash: "SHIP IT!", image: gallery6 },
 ];
 
 const STATUS_STYLES: Record<Status, { dot: string; chip: string; label: string }> = {
@@ -196,6 +205,24 @@ function TimelinePage() {
                           serial={`T+${h.h} · ${h.clock}`}
                           className={h.status === "live" ? "comic-shadow-lg" : ""}
                         >
+                          {/* COMIC ILLUSTRATION STRIP */}
+                          <div className="relative h-36 overflow-hidden border-b-2 border-foreground md:h-44">
+                            <img
+                              src={h.image}
+                              alt=""
+                              aria-hidden
+                              className="h-full w-full object-cover contrast-125 saturate-150"
+                            />
+                            <div className="bg-halftone-dense pointer-events-none absolute inset-0 opacity-50 mix-blend-multiply" />
+                            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent" />
+                            <div className={`absolute bottom-2 flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-primary ${left ? "right-3" : "left-3"}`}>
+                              <HudCrosshair className="h-3 w-3" />
+                              FRAME · {h.h}
+                            </div>
+                            <div className={`absolute top-2 ${left ? "left-2" : "right-2"} border-2 border-foreground bg-background px-1.5 py-0.5 font-comic text-[11px] leading-none comic-shadow-ink`}>
+                              {h.code}
+                            </div>
+                          </div>
                           <div className="p-6 md:p-8">
                             <div className={`flex items-center gap-2 ${left ? "md:justify-end" : ""}`}>
                               <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.25em] ${st.chip}`}>
