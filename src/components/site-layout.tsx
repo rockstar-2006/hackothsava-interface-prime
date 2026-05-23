@@ -80,23 +80,23 @@ export function SiteFooter() {
           src={heroCitadel}
           alt=""
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover opacity-[0.32] mix-blend-luminosity contrast-125 saturate-0"
+          className="absolute inset-0 h-full w-full object-cover opacity-[0.55] mix-blend-screen contrast-150 saturate-150"
         />
         <img
           src={galleryBg}
           alt=""
           aria-hidden
-          className="absolute -right-32 -bottom-10 h-[520px] w-[620px] object-cover opacity-[0.28] mix-blend-screen contrast-125"
+          className="absolute -right-32 -bottom-10 h-[520px] w-[620px] object-cover opacity-[0.6] mix-blend-screen contrast-150 saturate-150"
         />
         <img
           src={trackWeb3}
           alt=""
           aria-hidden
-          className="absolute -left-24 -bottom-16 h-[460px] w-[540px] object-cover opacity-[0.22] mix-blend-screen contrast-125 saturate-150 -rotate-3"
+          className="absolute -left-24 -bottom-16 h-[460px] w-[540px] object-cover opacity-[0.55] mix-blend-screen contrast-150 saturate-200 -rotate-3"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/40" />
-        <div className="bg-halftone-dense absolute inset-0 opacity-[0.35] mix-blend-multiply" />
-        <div className="bg-scan absolute inset-0 opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/50 to-background/20" />
+        <div className="bg-halftone-dense absolute inset-0 opacity-[0.45]" />
+        <div className="bg-scan absolute inset-0 opacity-40" />
         {/* Comic burst graphic */}
         <svg
           aria-hidden
