@@ -4,7 +4,6 @@ import { HudButton, HudCrosshair } from "./hud";
 import heroCitadel from "@/assets/hero-citadel.jpg";
 import galleryBg from "@/assets/gallery-3.jpg";
 import trackWeb3 from "@/assets/track-web3.jpg";
-import trackIot from "@/assets/track-iot.jpg";
 
 const NAV = [
   { to: "/", label: "Index" },
