@@ -80,25 +80,24 @@ export function SiteFooter() {
           src={heroCitadel}
           alt=""
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover opacity-[0.18] mix-blend-screen contrast-125 saturate-0"
+          className="absolute inset-0 h-full w-full object-cover opacity-[0.30] mix-blend-screen contrast-125 saturate-0"
         />
         <img
           src={galleryBg}
           alt=""
           aria-hidden
-          className="absolute -right-40 -bottom-16 h-[460px] w-[520px] object-cover opacity-[0.45] mix-blend-screen contrast-150 saturate-150"
+          className="absolute -right-24 -bottom-16 h-[520px] w-[560px] object-cover opacity-[0.65] mix-blend-screen contrast-150 saturate-150"
         />
         <img
           src={trackWeb3}
           alt=""
           aria-hidden
-          className="absolute -left-32 -bottom-20 h-[440px] w-[480px] object-cover opacity-[0.4] mix-blend-screen contrast-150 saturate-150 -rotate-3"
+          className="absolute -left-20 -bottom-16 h-[500px] w-[520px] object-cover opacity-[0.6] mix-blend-screen contrast-150 saturate-150 -rotate-3"
         />
-        {/* Center readability mask — fades art on the sides, keeps middle clean */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/60" />
+        {/* Soft top-fade only, keep illustrations bold */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-background/20 to-background/60" />
         <div className="bg-halftone-dense absolute inset-0 opacity-[0.25]" />
-        <div className="bg-scan absolute inset-0 opacity-50" />
+        <div className="bg-scan absolute inset-0 opacity-40" />
         {/* Comic burst graphic */}
         <svg
           aria-hidden
@@ -129,8 +128,8 @@ export function SiteFooter() {
         </svg>
       </div>
       <div className="relative mx-auto max-w-[1400px] px-6 py-16">
-        <div className="grid gap-12 md:grid-cols-12">
-          <div className="md:col-span-5">
+        <div className="grid gap-8 md:grid-cols-12">
+          <div className="md:col-span-5 border-2 border-foreground bg-background/90 backdrop-blur-sm p-6 comic-shadow">
             <div className="font-display text-4xl font-bold leading-none tracking-tight md:text-6xl">
               END OF
               <br />
@@ -141,7 +140,7 @@ export function SiteFooter() {
               Hackothsava broadcasts from the edge of the grid — see you on the floor.
             </p>
           </div>
-          <div className="md:col-span-3">
+          <div className="md:col-span-3 border-2 border-foreground bg-background/90 backdrop-blur-sm p-6 comic-shadow">
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
               // Navigate
             </div>
