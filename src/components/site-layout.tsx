@@ -157,7 +157,7 @@ export function SiteFooter() {
               ))}
             </ul>
           </div>
-          <div className="md:col-span-4">
+          <div className="md:col-span-4 border-2 border-foreground bg-background/90 backdrop-blur-sm p-6 comic-shadow">
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
               // Channels
             </div>
@@ -181,7 +181,7 @@ export function SiteFooter() {
             </ul>
           </div>
         </div>
-        <div className="mt-16 flex flex-col items-start justify-between gap-3 border-t border-border/60 pt-6 font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground md:flex-row md:items-center">
+        <div className="mt-10 flex flex-col items-start justify-between gap-3 border-2 border-foreground bg-background/90 backdrop-blur-sm px-4 py-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground comic-shadow md:flex-row md:items-center">
           <span>© 2026 HACKOTHSAVA · ALL CHANNELS RESERVED</span>
           <span>SECTOR-7 // BUILD 26.04.01 // SIG: 0xA3F-9921</span>
         </div>
