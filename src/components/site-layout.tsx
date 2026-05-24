@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { HudButton, HudCrosshair } from "./hud";
+import { HudButton, HudCrosshair, HudFrame } from "./hud";
 import { ComicLoader } from "./comic-loader";
 import heroCitadel from "@/assets/hero-citadel.jpg";
 import galleryBg from "@/assets/gallery-3.jpg";
@@ -129,63 +129,89 @@ export function SiteFooter() {
         </svg>
       </div>
       <div className="relative mx-auto max-w-[1400px] px-6 py-16">
-        <div className="grid gap-8 md:grid-cols-12">
-          <div className="md:col-span-5 border-2 border-foreground bg-background/90 backdrop-blur-sm p-6 comic-shadow">
-            <div className="font-display text-4xl font-bold leading-none tracking-tight md:text-6xl">
-              END OF
-              <br />
-              <span className="text-primary text-glow">TRANSMISSION_</span>
+        <div className="grid gap-6 md:grid-cols-12 md:gap-8">
+          <HudFrame
+            tone="accent"
+            label="// TRANSMISSION"
+            serial="FRAME-01"
+            className="md:col-span-5 bg-background/92 backdrop-blur-sm"
+          >
+            <div className="p-7">
+              <div className="font-display text-4xl font-bold leading-none tracking-tight md:text-6xl">
+                END OF
+                <br />
+                <span className="text-primary text-glow">TRANSMISSION_</span>
+              </div>
+              <p className="mt-6 max-w-md font-mono text-xs leading-relaxed text-muted-foreground">
+                The signal stays open. Push commits, push limits.
+                Hackothsava broadcasts from the edge of the grid — see you on the floor.
+              </p>
             </div>
-            <p className="mt-6 max-w-md font-mono text-xs leading-relaxed text-muted-foreground">
-              The signal stays open. Push commits, push limits.
-              Hackothsava broadcasts from the edge of the grid — see you on the floor.
-            </p>
-          </div>
-          <div className="md:col-span-3 border-2 border-foreground bg-background/90 backdrop-blur-sm p-6 comic-shadow">
-            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
-              // Navigate
-            </div>
-            <ul className="mt-5 space-y-2.5">
-              {NAV.map((n) => (
+          </HudFrame>
+
+          <HudFrame
+            tone="accent"
+            label="// NAVIGATE"
+            serial="FRAME-02"
+            className="md:col-span-3 bg-background/92 backdrop-blur-sm"
+          >
+            <ul className="space-y-2.5 p-7">
+              {NAV.map((n, i) => (
                 <li key={n.to}>
                   <Link
                     to={n.to}
-                    className="font-display text-sm text-muted-foreground transition-colors hover:text-primary"
+                    className="group flex items-baseline gap-2 font-display text-sm text-muted-foreground transition-colors hover:text-primary"
                   >
-                    → {n.label}
+                    <span className="font-mono text-[10px] text-primary/60 group-hover:text-primary">
+                      /{String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span>→ {n.label}</span>
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
-          <div className="md:col-span-4 border-2 border-foreground bg-background/90 backdrop-blur-sm p-6 comic-shadow">
-            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
-              // Channels
-            </div>
-            <ul className="mt-5 space-y-2.5 font-display text-sm text-muted-foreground">
-              <li className="flex items-center justify-between border-b border-border/50 py-2">
-                <span>Discord</span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary">/join</span>
-              </li>
-              <li className="flex items-center justify-between border-b border-border/50 py-2">
-                <span>GitHub</span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary">/hackothsava</span>
-              </li>
-              <li className="flex items-center justify-between border-b border-border/50 py-2">
-                <span>Instagram</span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary">@hackothsava</span>
-              </li>
-              <li className="flex items-center justify-between py-2">
-                <span>Mail</span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary">ops@hackothsava.io</span>
-              </li>
+          </HudFrame>
+
+          <HudFrame
+            tone="accent"
+            label="// CHANNELS"
+            serial="FRAME-03"
+            className="md:col-span-4 bg-background/92 backdrop-blur-sm"
+          >
+            <ul className="space-y-1 p-7 font-display text-sm text-muted-foreground">
+              {[
+                { k: "Discord", v: "/join" },
+                { k: "GitHub", v: "/hackothsava" },
+                { k: "Instagram", v: "@hackothsava" },
+                { k: "Mail", v: "ops@hackothsava.io" },
+              ].map((c, i, a) => (
+                <li
+                  key={c.k}
+                  className={`flex items-center justify-between py-2 ${
+                    i < a.length - 1 ? "border-b border-border/50" : ""
+                  }`}
+                >
+                  <span>{c.k}</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary">
+                    {c.v}
+                  </span>
+                </li>
+              ))}
             </ul>
+          </HudFrame>
+        </div>
+
+        <HudFrame
+          tone="accent"
+          label="// SYSTEM"
+          serial="EOF"
+          className="mt-8 bg-background/92 backdrop-blur-sm"
+        >
+          <div className="flex flex-col items-start justify-between gap-2 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground md:flex-row md:items-center">
+            <span>© 2026 HACKOTHSAVA · ALL CHANNELS RESERVED</span>
+            <span>SECTOR-7 // BUILD 26.04.01 // SIG: 0xA3F-9921</span>
           </div>
-        </div>
-        <div className="mt-10 flex flex-col items-start justify-between gap-3 border-2 border-foreground bg-background/90 backdrop-blur-sm px-4 py-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground comic-shadow md:flex-row md:items-center">
-          <span>© 2026 HACKOTHSAVA · ALL CHANNELS RESERVED</span>
-          <span>SECTOR-7 // BUILD 26.04.01 // SIG: 0xA3F-9921</span>
-        </div>
+        </HudFrame>
       </div>
     </footer>
   );
