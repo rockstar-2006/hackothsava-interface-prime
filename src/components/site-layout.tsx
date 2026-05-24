@@ -1,6 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { HudButton, HudCrosshair } from "./hud";
+import { ComicLoader } from "./comic-loader";
 import heroCitadel from "@/assets/hero-citadel.jpg";
 import galleryBg from "@/assets/gallery-3.jpg";
 import trackWeb3 from "@/assets/track-web3.jpg";
@@ -193,6 +194,7 @@ export function SiteFooter() {
 export function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <ComicLoader />
       <SiteHeader />
       <main>{children}</main>
       <SiteFooter />
