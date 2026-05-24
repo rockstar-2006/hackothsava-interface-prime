@@ -51,11 +51,13 @@ const PANEL_MS = 700;
 const HOLD_MS = 650;
 
 export function ComicLoader() {
+  const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     // Run once per session
     if (typeof window !== "undefined" && sessionStorage.getItem("hk_loader_seen")) {
       setDone(true);
@@ -85,7 +87,7 @@ export function ComicLoader() {
     };
   }, []);
 
-  if (done) return null;
+  if (!mounted || done) return null;
 
   return (
     <div
