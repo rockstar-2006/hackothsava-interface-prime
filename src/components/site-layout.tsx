@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { HudButton, HudCrosshair, HudFrame } from "./hud";
 import { ComicLoader } from "./comic-loader";
 import heroCitadel from "@/assets/hero-citadel.jpg";
@@ -73,27 +73,75 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
+  const ref = useRef<HTMLElement | null>(null);
+  // -1 (footer below viewport) → 0 (centered) → 1 (above viewport)
+  const [p, setP] = useState(0);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const el = ref.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      // progress: 0 when footer top hits bottom of viewport, 1 when bottom hits top
+      const range = rect.height + vh;
+      const raw = (vh - rect.top) / range;
+      const clamped = Math.max(0, Math.min(1, raw));
+      // map 0..1 → -1..1
+      setP(clamped * 2 - 1);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
-    <footer className="relative mt-32 overflow-hidden border-t-2 border-foreground">
+    <footer
+      ref={ref}
+      className="relative mt-32 overflow-hidden border-t-2 border-foreground [perspective:1200px]"
+    >
       {/* Background illustration */}
-      <div className="pointer-events-none absolute inset-0 -z-0">
+      <div className="pointer-events-none absolute inset-0 -z-0 [transform-style:preserve-3d]">
         <img
           src={heroCitadel}
           alt=""
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover opacity-[0.30] mix-blend-screen contrast-125 saturate-0"
+          className="absolute inset-0 h-full w-full object-cover opacity-[0.30] mix-blend-screen contrast-125 saturate-0 will-change-transform transition-transform duration-200 ease-out"
+          style={{
+            transform: `translate3d(0, ${p * -18}px, 0) scale(1.06) rotateX(${p * -1.2}deg)`,
+          }}
         />
         <img
           src={galleryBg}
           alt=""
           aria-hidden
-          className="absolute -right-24 -bottom-16 h-[520px] w-[560px] object-cover opacity-[0.65] mix-blend-screen contrast-150 saturate-150"
+          className="absolute -right-24 -bottom-16 h-[520px] w-[560px] object-cover opacity-[0.65] mix-blend-screen contrast-150 saturate-150 will-change-transform transition-transform duration-200 ease-out"
+          style={{
+            transform: `translate3d(${p * 22}px, ${p * -36}px, 0) rotate(${p * 1.4}deg)`,
+          }}
         />
         <img
           src={trackWeb3}
           alt=""
           aria-hidden
-          className="absolute -left-20 -bottom-16 h-[500px] w-[520px] object-cover opacity-[0.6] mix-blend-screen contrast-150 saturate-150 -rotate-3"
+          className="absolute -left-20 -bottom-16 h-[500px] w-[520px] object-cover opacity-[0.6] mix-blend-screen contrast-150 saturate-150 will-change-transform transition-transform duration-200 ease-out"
+          style={{
+            transform: `translate3d(${p * -26}px, ${p * -28}px, 0) rotate(${-3 + p * -1.6}deg)`,
+          }}
         />
         {/* Soft top-fade only, keep illustrations bold */}
         <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-background/20 to-background/60" />
@@ -103,7 +151,8 @@ export function SiteFooter() {
         <svg
           aria-hidden
           viewBox="0 0 200 200"
-          className="absolute -right-10 top-10 h-64 w-64 opacity-30"
+          className="absolute -right-10 top-10 h-64 w-64 opacity-30 will-change-transform transition-transform duration-200 ease-out"
+          style={{ transform: `translate3d(${p * 14}px, ${p * -10}px, 0) rotate(${p * 8}deg)` }}
         >
           <polygon
             points="100,4 118,32 152,16 148,54 192,60 162,90 196,118 156,124 168,164 128,158 120,196 100,168 80,196 72,158 32,164 44,124 4,118 38,90 8,60 52,54 48,16 82,32"
@@ -116,7 +165,10 @@ export function SiteFooter() {
         <svg
           aria-hidden
           viewBox="0 0 200 200"
-          className="absolute -left-16 top-1/2 h-72 w-72 -translate-y-1/2 opacity-25"
+          className="absolute -left-16 top-1/2 h-72 w-72 opacity-25 will-change-transform transition-transform duration-200 ease-out"
+          style={{
+            transform: `translate(-0px, -50%) translate3d(${p * -12}px, ${p * 8}px, 0) rotate(${p * -6}deg)`,
+          }}
         >
           <polygon
             points="100,10 112,40 150,30 140,68 184,72 158,100 188,128 150,128 158,168 122,156 110,190 100,164 90,190 78,156 42,168 50,128 12,128 42,100 16,72 60,68 50,30 88,40"
