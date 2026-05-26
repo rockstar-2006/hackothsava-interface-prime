@@ -62,6 +62,16 @@ export function SiteHeader() {
           <span className="hidden font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground lg:inline">
             STATUS / <span className="text-primary">ARMED</span>
           </span>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event("hk:replay-loader"))}
+            className="hidden items-center gap-1.5 border-2 border-foreground bg-background px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-foreground transition-colors hover:bg-primary hover:text-primary-foreground sm:inline-flex"
+            aria-label="Replay intro loader"
+            title="Replay intro loader"
+          >
+            <span className="inline-block h-1.5 w-1.5 bg-primary" />
+            Replay
+          </button>
           <HudButton to="#register">
             <HudCrosshair className="h-3.5 w-3.5" />
             Register Now
