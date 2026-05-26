@@ -83,8 +83,19 @@ export function ComicLoader() {
     setMounted(true);
     if (typeof window !== "undefined" && sessionStorage.getItem("hk_loader_seen")) {
       setDone(true);
-      return;
     }
+    const onReplay = () => {
+      try { sessionStorage.removeItem("hk_loader_seen"); } catch {}
+      setStage(0);
+      setPanelStep(0);
+      setDone(false);
+    };
+    window.addEventListener("hk:replay-loader", onReplay);
+    return () => window.removeEventListener("hk:replay-loader", onReplay);
+  }, []);
+
+  useEffect(() => {
+    if (done || !mounted) return;
     const t: number[] = [];
     t.push(window.setTimeout(() => setStage(1), T_OPEN));
     t.push(window.setTimeout(() => setStage(2), T_PANELS - 150));
@@ -107,7 +118,7 @@ export function ComicLoader() {
       t.forEach(clearTimeout);
       document.body.style.overflow = prev;
     };
-  }, []);
+  }, [done, mounted]);
 
   if (!mounted || done) return null;
 
