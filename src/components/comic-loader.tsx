@@ -83,8 +83,19 @@ export function ComicLoader() {
     setMounted(true);
     if (typeof window !== "undefined" && sessionStorage.getItem("hk_loader_seen")) {
       setDone(true);
-      return;
     }
+    const onReplay = () => {
+      try { sessionStorage.removeItem("hk_loader_seen"); } catch {}
+      setStage(0);
+      setPanelStep(0);
+      setDone(false);
+    };
+    window.addEventListener("hk:replay-loader", onReplay);
+    return () => window.removeEventListener("hk:replay-loader", onReplay);
+  }, []);
+
+  useEffect(() => {
+    if (done || !mounted) return;
     const t: number[] = [];
     t.push(window.setTimeout(() => setStage(1), T_OPEN));
     t.push(window.setTimeout(() => setStage(2), T_PANELS - 150));
@@ -107,7 +118,7 @@ export function ComicLoader() {
       t.forEach(clearTimeout);
       document.body.style.overflow = prev;
     };
-  }, []);
+  }, [done, mounted]);
 
   if (!mounted || done) return null;
 
@@ -198,16 +209,18 @@ export function ComicLoader() {
         className="absolute inset-0 grid place-items-center"
         style={{ perspective: "2400px" }}
       >
+        {/* Stacked grid cell so cover + inner page occupy the exact same box */}
+        <div className="relative grid h-[78vh] w-[min(86vw,640px)] [grid-template-areas:'stack']">
         {/* Soft book shadow on the surface beneath */}
         <div
-          className="pointer-events-none absolute h-[80vh] w-[min(88vw,660px)] rounded-[2px] bg-black/60 blur-2xl"
+          className="pointer-events-none [grid-area:stack] -z-10 bg-black/60 blur-2xl"
           style={{ transform: "translateY(28px) scale(0.96)" }}
           aria-hidden
         />
 
         {/* Cover page — flips away */}
         <div
-          className="absolute h-[78vh] w-[min(86vw,640px)] border-[3px] border-foreground bg-card"
+          className="relative [grid-area:stack] border-[3px] border-foreground bg-card"
           style={{
             transformOrigin: "left center",
             transform:
@@ -323,7 +336,7 @@ export function ComicLoader() {
 
         {/* Inner page revealed underneath — panels stream in */}
         <div
-          className="relative h-[78vh] w-[min(86vw,640px)] border-[3px] border-foreground bg-background overflow-hidden transition-opacity duration-300"
+          className="relative [grid-area:stack] border-[3px] border-foreground bg-background overflow-hidden"
           style={{
             opacity: stage >= 1 ? 1 : 0,
             transform: stage >= 3 ? "scale(1.18)" : "scale(1)",
@@ -397,6 +410,7 @@ export function ComicLoader() {
               );
             })}
           </div>
+        </div>
         </div>
       </div>
 
