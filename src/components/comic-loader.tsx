@@ -40,11 +40,12 @@ const PANELS = [
 ];
 
 // Timing (ms from mount)
-const T_OPEN = 600;      // start page turn
-const T_PANELS = 1500;   // panels start streaming in
-const T_PANEL_STEP = 700;
-const T_SPLASH = T_PANELS + T_PANEL_STEP * PANELS.length + 200; // ~3900
-const T_LEAVE = T_SPLASH + 1100;  // ~5000
+const T_OPEN = 900;      // hold cover a beat longer so it reads as a book
+const T_TURN_MS = 1400;  // slower, weightier page turn
+const T_PANELS = T_OPEN + T_TURN_MS - 250; // panels start as page nears flat
+const T_PANEL_STEP = 750;
+const T_SPLASH = T_PANELS + T_PANEL_STEP * PANELS.length + 250;
+const T_LEAVE = T_SPLASH + 1200;
 const T_DONE = T_LEAVE + 800;
 
 function Typewriter({ text, active, delay = 0 }: { text: string; active: boolean; delay?: number }) {
