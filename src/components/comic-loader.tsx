@@ -21,32 +21,32 @@ const PANELS = [
     cap: "THE GRID FRACTURED…",
     sub: "001 // COLD OPEN",
     sfx: "BZZT!",
-    tilt: -2,
+    tilt: 0,
   },
   {
     img: trackAi,
     cap: "BUILDERS HEARD THE CALL.",
     sub: "002 // RISING ACTION",
     sfx: "WHOOSH!",
-    tilt: 1.5,
+    tilt: 0,
   },
   {
     img: trackWeb3,
     cap: "36 HOURS TO REWRITE REALITY.",
     sub: "003 // CLIMAX",
     sfx: "ZAP!",
-    tilt: -1,
+    tilt: 0,
   },
 ];
 
 // Timing (ms from mount)
-const T_OPEN = 900;      // hold cover a beat longer so it reads as a book
-const T_TURN_MS = 1400;  // slower, weightier page turn
-const T_PANELS = T_OPEN + T_TURN_MS - 250; // panels start as page nears flat
-const T_PANEL_STEP = 750;
-const T_SPLASH = T_PANELS + T_PANEL_STEP * PANELS.length + 250;
-const T_LEAVE = T_SPLASH + 1200;
-const T_DONE = T_LEAVE + 800;
+const T_OPEN = 1000;     // hold the closed cover so it reads as a book
+const T_TURN_MS = 1600;  // slow, weighty page turn
+const T_PANELS = T_OPEN + T_TURN_MS - 150; // panels start as page lays flat
+const T_PANEL_STEP = 850;
+const T_SPLASH = T_PANELS + T_PANEL_STEP * PANELS.length + 400;
+const T_LEAVE = T_SPLASH + 1300;
+const T_DONE = T_LEAVE + 900;
 
 function Typewriter({ text, active, delay = 0 }: { text: string; active: boolean; delay?: number }) {
   const [n, setN] = useState(0);
