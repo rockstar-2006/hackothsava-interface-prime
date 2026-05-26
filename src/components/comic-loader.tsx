@@ -21,32 +21,32 @@ const PANELS = [
     cap: "THE GRID FRACTURED…",
     sub: "001 // COLD OPEN",
     sfx: "BZZT!",
-    tilt: -2,
+    tilt: 0,
   },
   {
     img: trackAi,
     cap: "BUILDERS HEARD THE CALL.",
     sub: "002 // RISING ACTION",
     sfx: "WHOOSH!",
-    tilt: 1.5,
+    tilt: 0,
   },
   {
     img: trackWeb3,
     cap: "36 HOURS TO REWRITE REALITY.",
     sub: "003 // CLIMAX",
     sfx: "ZAP!",
-    tilt: -1,
+    tilt: 0,
   },
 ];
 
 // Timing (ms from mount)
-const T_OPEN = 900;      // hold cover a beat longer so it reads as a book
-const T_TURN_MS = 1400;  // slower, weightier page turn
-const T_PANELS = T_OPEN + T_TURN_MS - 250; // panels start as page nears flat
-const T_PANEL_STEP = 750;
-const T_SPLASH = T_PANELS + T_PANEL_STEP * PANELS.length + 250;
-const T_LEAVE = T_SPLASH + 1200;
-const T_DONE = T_LEAVE + 800;
+const T_OPEN = 1000;     // hold the closed cover so it reads as a book
+const T_TURN_MS = 1600;  // slow, weighty page turn
+const T_PANELS = T_OPEN + T_TURN_MS - 150; // panels start as page lays flat
+const T_PANEL_STEP = 850;
+const T_SPLASH = T_PANELS + T_PANEL_STEP * PANELS.length + 400;
+const T_LEAVE = T_SPLASH + 1300;
+const T_DONE = T_LEAVE + 900;
 
 function Typewriter({ text, active, delay = 0 }: { text: string; active: boolean; delay?: number }) {
   const [n, setN] = useState(0);
@@ -225,9 +225,9 @@ export function ComicLoader() {
             transformOrigin: "left center",
             transform:
               stage >= 1
-                ? "rotateY(-168deg)"
+                ? "rotateY(-172deg)"
                 : "rotateY(0deg)",
-            transition: `transform ${T_TURN_MS}ms cubic-bezier(.55,.05,.25,1)`,
+            transition: `transform ${T_TURN_MS}ms cubic-bezier(.65,.02,.25,1)`,
             transformStyle: "preserve-3d",
             zIndex: stage >= 1 ? 1 : 5,
             boxShadow: stage >= 1
@@ -346,62 +346,64 @@ export function ComicLoader() {
           <div className="bg-halftone-dense absolute inset-0 opacity-30" />
 
           {/* Panel stack */}
-          <div className="relative grid h-full grid-rows-3 gap-2 p-3">
+          <div className="relative grid h-full grid-rows-3 gap-3 p-4">
             {PANELS.map((p, i) => {
               const on = panelStep > i;
               const focused = stage >= 3 && i === PANELS.length - 1;
               return (
                 <div
                   key={i}
-                  className="relative overflow-hidden border-2 border-foreground bg-card comic-shadow-ink"
+                  className="relative grid grid-cols-[40%_1fr] overflow-hidden border-2 border-foreground bg-card comic-shadow-ink"
                   style={{
                     transform: on
-                      ? `translateX(0) rotate(${p.tilt}deg) scale(${focused ? 1.04 : 1})`
-                      : `translateX(${i % 2 ? "120%" : "-120%"}) rotate(${p.tilt * 2}deg)`,
+                      ? `translateX(0) scale(${focused ? 1.03 : 1})`
+                      : `translateX(${i % 2 ? "60%" : "-60%"})`,
                     opacity: on ? 1 : 0,
-                    transition: "transform 550ms cubic-bezier(.6,0,.2,1), opacity 300ms ease",
+                    transition:
+                      "transform 650ms cubic-bezier(.22,1,.36,1), opacity 400ms ease",
                   }}
                 >
-                  <img
-                    src={p.img}
-                    alt=""
-                    className="absolute inset-0 h-full w-full object-cover opacity-85 mix-blend-screen contrast-125 saturate-150"
-                  />
-                  <div className="bg-halftone-dense absolute inset-0 opacity-40" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-transparent" />
-
-                  {/* sub label */}
-                  <div className="absolute left-2 top-2 border border-foreground bg-background px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.25em]">
-                    {p.sub}
+                  {/* Image side — clear, fully visible */}
+                  <div className="relative h-full overflow-hidden border-r-2 border-foreground bg-background">
+                    <img
+                      src={p.img}
+                      alt=""
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                    <div className="bg-halftone-dense absolute inset-0 opacity-25 mix-blend-multiply" />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-transparent" />
                   </div>
 
-                  {/* ink underline drawing itself */}
-                  <svg className="absolute inset-x-3 bottom-12 h-1" viewBox="0 0 200 4" preserveAspectRatio="none">
-                    <line
-                      x1="0"
-                      y1="2"
-                      x2="200"
-                      y2="2"
-                      stroke="var(--color-primary)"
-                      strokeWidth="2"
-                      strokeDasharray="200"
-                      strokeDashoffset={on ? 0 : 200}
-                      style={{ transition: "stroke-dashoffset 700ms ease-out 150ms" }}
-                    />
-                  </svg>
-
-                  {/* caption with typewriter */}
-                  <div className="absolute inset-x-3 bottom-2 border-2 border-foreground bg-background/95 px-3 py-1.5">
-                    <div className="font-comic text-sm leading-tight text-foreground sm:text-base">
-                      {on ? <Typewriter text={p.cap} active={on} delay={120} /> : ""}
+                  {/* Text side — sub label, caption, ink underline */}
+                  <div className="relative flex h-full flex-col justify-between bg-background p-3">
+                    <div className="inline-block w-fit border border-foreground bg-primary px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-primary-foreground">
+                      {p.sub}
+                    </div>
+                    <div>
+                      <svg className="mb-2 h-1 w-full" viewBox="0 0 200 4" preserveAspectRatio="none">
+                        <line
+                          x1="0"
+                          y1="2"
+                          x2="200"
+                          y2="2"
+                          stroke="var(--color-primary)"
+                          strokeWidth="2"
+                          strokeDasharray="200"
+                          strokeDashoffset={on ? 0 : 200}
+                          style={{ transition: "stroke-dashoffset 800ms ease-out 200ms" }}
+                        />
+                      </svg>
+                      <div className="font-comic text-[13px] leading-tight text-foreground sm:text-[15px]">
+                        {on ? <Typewriter text={p.cap} active={on} delay={150} /> : ""}
+                      </div>
                     </div>
                   </div>
 
-                  {/* SFX word flying in */}
+                  {/* SFX word flying in — sits over the image side */}
                   {on && (
                     <div
-                      className="absolute right-2 top-1/2 -translate-y-1/2 font-splash text-2xl text-primary drop-shadow-[2px_2px_0_var(--color-foreground)] sm:text-3xl"
-                      style={{ animation: "sfxFly 0.5s cubic-bezier(.34,1.56,.64,1) 180ms both" }}
+                      className="pointer-events-none absolute left-[34%] top-3 font-splash text-xl text-primary drop-shadow-[2px_2px_0_var(--color-foreground)] sm:text-2xl"
+                      style={{ animation: "sfxFly 0.55s cubic-bezier(.34,1.56,.64,1) 220ms both" }}
                     >
                       {p.sfx}
                     </div>
