@@ -405,12 +405,12 @@ export function ComicLoader() {
         className="pointer-events-none absolute inset-0 grid place-items-center transition-opacity duration-300"
         style={{ opacity: stage >= 3 ? 1 : 0, zIndex: 20 }}
       >
-        {/* white flash */}
+        {/* subtle vignette instead of harsh flash */}
         <div
-          className="absolute inset-0 bg-primary"
+          className="absolute inset-0 bg-gradient-radial from-primary/15 via-transparent to-background/60"
           style={{
-            opacity: stage === 3 ? 0.18 : 0,
-            transition: "opacity 250ms ease",
+            opacity: stage === 3 ? 1 : 0,
+            transition: "opacity 400ms ease",
           }}
         />
         <div
