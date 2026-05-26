@@ -196,59 +196,129 @@ export function ComicLoader() {
       {/* ============== ACT 1 + 2 — Book cover that turns ============== */}
       <div
         className="absolute inset-0 grid place-items-center"
-        style={{ perspective: "1800px" }}
+        style={{ perspective: "2400px" }}
       >
+        {/* Soft book shadow on the surface beneath */}
+        <div
+          className="pointer-events-none absolute h-[80vh] w-[min(88vw,660px)] rounded-[2px] bg-black/60 blur-2xl"
+          style={{ transform: "translateY(28px) scale(0.96)" }}
+          aria-hidden
+        />
+
         {/* Cover page — flips away */}
         <div
-          className="absolute h-[78vh] w-[min(86vw,640px)] border-[3px] border-foreground bg-card comic-shadow-ink"
+          className="absolute h-[78vh] w-[min(86vw,640px)] border-[3px] border-foreground bg-card"
           style={{
             transformOrigin: "left center",
             transform:
               stage >= 1
-                ? "perspective(1800px) rotateY(-170deg)"
-                : "perspective(1800px) rotateY(0deg)",
-            transition: "transform 1.1s cubic-bezier(.7,.05,.2,1)",
-            backfaceVisibility: "hidden",
+                ? "rotateY(-168deg)"
+                : "rotateY(0deg)",
+            transition: `transform ${T_TURN_MS}ms cubic-bezier(.55,.05,.25,1)`,
+            transformStyle: "preserve-3d",
             zIndex: stage >= 1 ? 1 : 5,
+            boxShadow: stage >= 1
+              ? "0 30px 60px -20px rgba(0,0,0,0.7)"
+              : "8px 10px 0 0 var(--ink), 0 30px 60px -20px rgba(0,0,0,0.55)",
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background to-background" />
-          <div className="bg-halftone-dense absolute inset-0 opacity-40" />
-          {/* radial burst behind title */}
-          <svg className="absolute inset-0 h-full w-full opacity-60" viewBox="0 0 100 100" preserveAspectRatio="none">
-            {Array.from({ length: 28 }).map((_, i) => (
-              <line
-                key={i}
-                x1="50"
-                y1="50"
-                x2={50 + Math.cos((i / 28) * Math.PI * 2) * 80}
-                y2={50 + Math.sin((i / 28) * Math.PI * 2) * 80}
-                stroke="currentColor"
-                strokeWidth="0.25"
-                className="text-primary"
-              />
-            ))}
-          </svg>
-          <div className="absolute inset-0 grid place-items-center px-6 text-center">
-            <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
-                A HACKOTHSAVA STORY
+          {/* ===== Front face of cover ===== */}
+          <div
+            className="absolute inset-0 overflow-hidden"
+            style={{ backfaceVisibility: "hidden" }}
+          >
+            {/* paper tone */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/25 via-card to-background" />
+            <div className="bg-halftone-dense absolute inset-0 opacity-30" />
+
+            {/* MASTHEAD */}
+            <div className="absolute inset-x-0 top-0 flex items-center justify-between border-b-[3px] border-foreground bg-primary px-4 py-2 text-primary-foreground">
+              <div className="font-splash text-2xl leading-none tracking-wider">
+                HACKOTHSAVA
               </div>
-              <div
-                className="mt-3 font-splash text-[14vmin] leading-[0.9] text-primary text-glow drop-shadow-[3px_3px_0_var(--color-foreground)]"
-                style={{ animation: "pulse 1.4s ease-in-out infinite" }}
-              >
-                ISSUE
-                <br />
-                #2K26
-              </div>
-              <div className="mt-4 inline-block border-2 border-foreground bg-background px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.3em]">
-                Opening cover…
+              <div className="border-2 border-foreground bg-background px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-foreground">
+                ISSUE #2K26
               </div>
             </div>
+
+            {/* Cover artwork band */}
+            <div className="absolute inset-x-4 top-[68px] bottom-[120px] overflow-hidden border-[3px] border-foreground bg-background">
+              <img
+                src={heroCitadel}
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover opacity-90 contrast-125 saturate-150"
+              />
+              <div className="bg-halftone-dense absolute inset-0 opacity-30" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent" />
+
+              {/* corner tag */}
+              <div className="absolute right-3 top-3 rotate-[8deg] border-2 border-foreground bg-primary px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-primary-foreground">
+                EXCLUSIVE
+              </div>
+
+              {/* Title block */}
+              <div className="absolute inset-x-4 bottom-3">
+                <div className="font-mono text-[9px] uppercase tracking-[0.4em] text-muted-foreground">
+                  A Cinematic Builder Saga
+                </div>
+                <div className="mt-1 font-splash text-[8.5vmin] leading-[0.9] text-primary drop-shadow-[3px_3px_0_var(--ink)]">
+                  ENTER
+                  <br />
+                  THE GRID
+                </div>
+              </div>
+            </div>
+
+            {/* Footer strip — barcode + price + date */}
+            <div className="absolute inset-x-0 bottom-0 grid grid-cols-[auto_1fr_auto] items-center gap-3 border-t-[3px] border-foreground bg-background px-4 py-2">
+              {/* barcode */}
+              <div className="flex h-8 items-end gap-[2px]">
+                {Array.from({ length: 22 }).map((_, i) => (
+                  <span
+                    key={i}
+                    className="block bg-foreground"
+                    style={{
+                      width: 2,
+                      height: 12 + ((i * 37) % 18),
+                    }}
+                  />
+                ))}
+              </div>
+              <div className="text-center font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground">
+                VOL. 02 · 36 HOUR EDITION
+              </div>
+              <div className="border-2 border-foreground bg-primary px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-primary-foreground">
+                ₹ 00
+              </div>
+            </div>
+
+            {/* Spine */}
+            <div className="absolute inset-y-0 left-0 w-3 border-r-2 border-foreground bg-foreground" />
+
+            {/* Page-turn shading — darkens the cover as it folds */}
+            <div
+              className="pointer-events-none absolute inset-0 bg-gradient-to-l from-black/70 via-black/20 to-transparent"
+              style={{
+                opacity: stage >= 1 ? 1 : 0,
+                transition: `opacity ${T_TURN_MS}ms ease-in`,
+              }}
+            />
           </div>
-          {/* spine */}
-          <div className="absolute inset-y-0 left-0 w-3 bg-foreground" />
+
+          {/* ===== Back face of cover (visible mid-turn) ===== */}
+          <div
+            className="absolute inset-0 overflow-hidden bg-card"
+            style={{
+              transform: "rotateY(180deg)",
+              backfaceVisibility: "hidden",
+            }}
+          >
+            <div className="bg-halftone-dense absolute inset-0 opacity-20" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/40" />
+            <div className="absolute inset-x-6 top-6 border-2 border-foreground bg-background px-3 py-1.5 font-mono text-[9px] font-bold uppercase tracking-[0.3em]">
+              Inside Cover · Do Not Skip
+            </div>
+          </div>
         </div>
 
         {/* Inner page revealed underneath — panels stream in */}
