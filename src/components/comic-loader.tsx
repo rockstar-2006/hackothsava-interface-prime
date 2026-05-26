@@ -411,6 +411,7 @@ export function ComicLoader() {
             })}
           </div>
         </div>
+        </div>
       </div>
 
       {/* ============== ACT 4 — Splash overlay ============== */}
