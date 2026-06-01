@@ -13,6 +13,7 @@ import { Route as TimelineRouteImport } from './routes/timeline'
 import { Route as PrizesRouteImport } from './routes/prizes'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as BenefitsRouteImport } from './routes/benefits'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TimelineRoute = TimelineRouteImport.update({
@@ -35,6 +36,11 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BenefitsRoute = BenefitsRouteImport.update({
+  id: '/benefits',
+  path: '/benefits',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,6 +49,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/benefits': typeof BenefitsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/prizes': typeof PrizesRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/benefits': typeof BenefitsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/prizes': typeof PrizesRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/benefits': typeof BenefitsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/prizes': typeof PrizesRoute
@@ -65,14 +74,22 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/faq' | '/gallery' | '/prizes' | '/timeline'
+  fullPaths: '/' | '/benefits' | '/faq' | '/gallery' | '/prizes' | '/timeline'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/faq' | '/gallery' | '/prizes' | '/timeline'
-  id: '__root__' | '/' | '/faq' | '/gallery' | '/prizes' | '/timeline'
+  to: '/' | '/benefits' | '/faq' | '/gallery' | '/prizes' | '/timeline'
+  id:
+    | '__root__'
+    | '/'
+    | '/benefits'
+    | '/faq'
+    | '/gallery'
+    | '/prizes'
+    | '/timeline'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BenefitsRoute: typeof BenefitsRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
   PrizesRoute: typeof PrizesRoute
@@ -109,6 +126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/benefits': {
+      id: '/benefits'
+      path: '/benefits'
+      fullPath: '/benefits'
+      preLoaderRoute: typeof BenefitsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -121,6 +145,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BenefitsRoute: BenefitsRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
   PrizesRoute: PrizesRoute,
