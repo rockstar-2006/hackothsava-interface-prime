@@ -8,6 +8,8 @@ import {
   type MotionValue,
 } from "motion/react";
 import { SiteHeader } from "@/components/site-layout";
+import { ItineraryBuilder } from "@/components/benefits/itinerary-builder";
+import { CoastalMap } from "@/components/benefits/coastal-map";
 import hero from "@/assets/benefit-hero-ocean.jpg";
 import underwater from "@/assets/benefit-underwater.jpg";
 import temple from "@/assets/benefit-temple.jpg";
@@ -451,6 +453,30 @@ function BenefitsPage() {
         </div>
       </section>
 
+      {/* ============ INTERACTIVE MAP ============ */}
+      <section className="relative bg-[#0a4d68] pb-24">
+        <div className="relative mx-auto max-w-[1400px] px-6">
+          <div className="flex flex-col gap-5">
+            <Chapter n="MAP" label="Chart the Coast" />
+            <Reveal>
+              <h2 className="max-w-3xl font-display text-4xl font-bold leading-[1] tracking-tight md:text-6xl">
+                Tap a pin.{" "}
+                <span className="text-[#05c5d8]">Preview the chapter.</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="max-w-2xl text-[#b9f6ff]/75">
+                Every beach, temple, island and lighthouse plotted on one coast.
+                Click a marker to open its story before you ever pack a bag.
+              </p>
+            </Reveal>
+          </div>
+          <Reveal delay={0.15} className="mt-12">
+            <CoastalMap />
+          </Reveal>
+        </div>
+      </section>
+
       <WaveDivider from="#088395" />
 
       {/* ============ CH 03 — CULTURE ============ */}
@@ -585,6 +611,35 @@ function BenefitsPage() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ============ FINALE / CTA ============ */}
+      {/* ============ ITINERARY BUILDER ============ */}
+      <section className="relative overflow-hidden bg-[#021726] py-24">
+        <Bubbles count={12} />
+        <div className="relative mx-auto max-w-[1400px] px-6">
+          <div className="flex flex-col gap-5">
+            <Chapter n="CH·05" label="Build Your Day" />
+            <Reveal>
+              <h2 className="max-w-3xl font-display text-4xl font-bold leading-[1] tracking-tight md:text-6xl">
+                Design your{" "}
+                <span className="bg-gradient-to-r from-[#05c5d8] to-[#ffdba1] bg-clip-text text-transparent">
+                  perfect coastal day.
+                </span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="max-w-2xl text-[#b9f6ff]/75">
+                Pick the beaches, culture stops and where you crash — we&apos;ll
+                plot a timed route with travel buffers and meal breaks. One tap,
+                one full day mapped out.
+              </p>
+            </Reveal>
+          </div>
+          <Reveal delay={0.15} className="mt-12">
+            <ItineraryBuilder />
+          </Reveal>
         </div>
       </section>
 
