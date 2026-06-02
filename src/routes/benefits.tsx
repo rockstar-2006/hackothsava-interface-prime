@@ -615,6 +615,35 @@ function BenefitsPage() {
       </section>
 
       {/* ============ FINALE / CTA ============ */}
+      {/* ============ ITINERARY BUILDER ============ */}
+      <section className="relative overflow-hidden bg-[#021726] py-24">
+        <Bubbles count={12} />
+        <div className="relative mx-auto max-w-[1400px] px-6">
+          <div className="flex flex-col gap-5">
+            <Chapter n="CH·05" label="Build Your Day" />
+            <Reveal>
+              <h2 className="max-w-3xl font-display text-4xl font-bold leading-[1] tracking-tight md:text-6xl">
+                Design your{" "}
+                <span className="bg-gradient-to-r from-[#05c5d8] to-[#ffdba1] bg-clip-text text-transparent">
+                  perfect coastal day.
+                </span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="max-w-2xl text-[#b9f6ff]/75">
+                Pick the beaches, culture stops and where you crash — we&apos;ll
+                plot a timed route with travel buffers and meal breaks. One tap,
+                one full day mapped out.
+              </p>
+            </Reveal>
+          </div>
+          <Reveal delay={0.15} className="mt-12">
+            <ItineraryBuilder />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============ FINALE / CTA ============ */}
       <section className="relative overflow-hidden bg-[#021726] py-32">
         <img
           src={underwater}
