@@ -8,6 +8,8 @@ import {
   type MotionValue,
 } from "motion/react";
 import { SiteHeader } from "@/components/site-layout";
+import { ItineraryBuilder } from "@/components/benefits/itinerary-builder";
+import { CoastalMap } from "@/components/benefits/coastal-map";
 import hero from "@/assets/benefit-hero-ocean.jpg";
 import underwater from "@/assets/benefit-underwater.jpg";
 import temple from "@/assets/benefit-temple.jpg";
