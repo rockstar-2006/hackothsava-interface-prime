@@ -1,10 +1,8 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
-/* ---------------- Aquatic palette (kept in sync with benefits page) ----------------
-   deepest #021726 · abyss #042a43 · ocean #0a4d68 · reef #088395
-   aqua #05c5d8 · foam #b9f6ff · sand #ffdba1 · coral #ff7a5c
------------------------------------------------------------------------------------ */
+/* ---- Ocean Deep editorial palette ----
+   navy #0c2340 · slate #1a4a6e · teal #2d8a9e · mist #5cbdb9 · paper #fdfdfb */
 
 type Kind = "beach" | "spot" | "culture";
 
@@ -12,11 +10,8 @@ interface Pick {
   id: string;
   name: string;
   icon: string;
-  /** lower = earlier in the day */
   phase: number;
-  /** minutes spent on site */
   duration: number;
-  /** minutes of travel to reach it */
   travel: number;
   note: string;
 }
@@ -72,12 +67,11 @@ function fmt(mins: number) {
 function buildSchedule(picks: Pick[], hotel: Hotel | null): Slot[] {
   const ordered = [...picks].sort((a, b) => a.phase - b.phase);
   const slots: Slot[] = [];
-  let clock = 6 * 60 + 30; // 06:30
+  let clock = 6 * 60 + 30;
   let lunchDone = false;
 
   for (const p of ordered) {
     clock += p.travel;
-    // drop in a lunch break once we cross 1pm
     if (!lunchDone && clock >= 13 * 60) {
       slots.push({
         time: fmt(clock),
@@ -89,7 +83,6 @@ function buildSchedule(picks: Pick[], hotel: Hotel | null): Slot[] {
       clock += 45;
       lunchDone = true;
     }
-    // hotel check-in slips in mid-afternoon
     if (hotel && p.phase >= 8 && !slots.some((s) => s.kind === "hotel")) {
       slots.push({
         time: fmt(clock),
@@ -110,7 +103,6 @@ function buildSchedule(picks: Pick[], hotel: Hotel | null): Slot[] {
     clock += p.duration;
   }
 
-  // hotel never placed (no late picks) -> place near the end
   if (hotel && !slots.some((s) => s.kind === "hotel")) {
     slots.push({
       time: fmt(clock),
@@ -122,7 +114,6 @@ function buildSchedule(picks: Pick[], hotel: Hotel | null): Slot[] {
     clock += 30;
   }
 
-  // always end on dinner
   clock += 20;
   slots.push({
     time: fmt(clock),
@@ -136,11 +127,11 @@ function buildSchedule(picks: Pick[], hotel: Hotel | null): Slot[] {
 }
 
 const KIND_ACCENT: Record<Slot["kind"], string> = {
-  beach: "#05c5d8",
-  spot: "#ffdba1",
-  culture: "#ff7a5c",
-  meal: "#7ee8fa",
-  hotel: "#b9f6ff",
+  beach: "#2d8a9e",
+  spot: "#1a4a6e",
+  culture: "#5cbdb9",
+  meal: "#2d8a9e",
+  hotel: "#1a4a6e",
 };
 
 function Chip({
@@ -160,20 +151,20 @@ function Chip({
     <button
       type="button"
       onClick={onClick}
-      className={`group flex items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all ${
+      className={`group flex items-center gap-3 border px-4 py-3 text-left transition-all ${
         active
-          ? "border-[#05c5d8] bg-[#05c5d8]/15 shadow-[0_0_22px_-6px_#05c5d8]"
-          : "border-[#b9f6ff]/15 bg-[#021726]/40 hover:border-[#05c5d8]/50 hover:bg-[#021726]/70"
+          ? "border-[#2d8a9e] bg-[#2d8a9e]/10"
+          : "border-[#0c2340]/12 bg-white hover:border-[#2d8a9e]/50"
       }`}
     >
       <span className="text-xl">{icon}</span>
       <span className="flex flex-col">
-        <span className="font-display text-sm font-bold text-[#eafcff]">{label}</span>
-        {sub && <span className="font-mono text-[10px] tracking-wider text-[#b9f6ff]/55">{sub}</span>}
+        <span className="text-sm font-semibold text-[#0c2340]">{label}</span>
+        {sub && <span className="text-[10px] tracking-wider text-[#1a4a6e]/60">{sub}</span>}
       </span>
       <span
         className={`ml-auto grid h-5 w-5 place-items-center rounded-full border text-[11px] transition-colors ${
-          active ? "border-[#05c5d8] bg-[#05c5d8] text-[#021726]" : "border-[#b9f6ff]/30 text-transparent"
+          active ? "border-[#2d8a9e] bg-[#2d8a9e] text-white" : "border-[#0c2340]/25 text-transparent"
         }`}
       >
         ✓
@@ -213,10 +204,10 @@ export function ItineraryBuilder() {
   return (
     <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
       {/* ------- LEFT: controls ------- */}
-      <div className="rounded-3xl border border-[#05c5d8]/20 bg-[#021726]/50 p-6 backdrop-blur md:p-8">
+      <div className="border border-[#0c2340]/12 bg-white p-6 md:p-8">
         <div className="space-y-7">
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#05c5d8]">01 · Beaches</p>
+            <p className="font-['Work_Sans'] text-[11px] font-semibold uppercase tracking-[0.3em] text-[#2d8a9e]">01 · Beaches</p>
             <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
               {BEACH_PICKS.map((b) => (
                 <Chip key={b.id} icon={b.icon} label={b.name} sub={b.note} active={beaches.includes(b.id)} onClick={() => toggle(b.id, beaches, setBeaches)} />
@@ -225,7 +216,7 @@ export function ItineraryBuilder() {
           </div>
 
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#ffdba1]">02 · Culture & Spots</p>
+            <p className="font-['Work_Sans'] text-[11px] font-semibold uppercase tracking-[0.3em] text-[#1a4a6e]">02 · Culture & Spots</p>
             <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
               {[...SPOT_PICKS, ...CULTURE_PICKS].map((s) => {
                 const inSpots = SPOT_PICKS.some((p) => p.id === s.id);
@@ -239,22 +230,22 @@ export function ItineraryBuilder() {
           </div>
 
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#b9f6ff]">03 · Where you crash</p>
+            <p className="font-['Work_Sans'] text-[11px] font-semibold uppercase tracking-[0.3em] text-[#5cbdb9]">03 · Where you crash</p>
             <div className="mt-3 grid gap-2.5 sm:grid-cols-3">
               {HOTELS.map((h) => (
                 <button
                   key={h.id}
                   type="button"
                   onClick={() => setHotel(h.id)}
-                  className={`flex flex-col rounded-xl border px-4 py-3 text-left transition-all ${
+                  className={`flex flex-col border px-4 py-3 text-left transition-all ${
                     hotel === h.id
-                      ? "border-[#ffdba1] bg-[#ffdba1]/10 shadow-[0_0_22px_-8px_#ffdba1]"
-                      : "border-[#b9f6ff]/15 bg-[#021726]/40 hover:border-[#ffdba1]/50"
+                      ? "border-[#1a4a6e] bg-[#1a4a6e]/8"
+                      : "border-[#0c2340]/12 bg-white hover:border-[#1a4a6e]/50"
                   }`}
                 >
-                  <span className="font-display text-sm font-bold text-[#eafcff]">{h.name}</span>
-                  <span className="font-mono text-[10px] tracking-wider text-[#b9f6ff]/55">{h.tag}</span>
-                  <span className="mt-2 font-display text-lg font-bold text-[#ffdba1]">{h.price}</span>
+                  <span className="text-sm font-semibold text-[#0c2340]">{h.name}</span>
+                  <span className="text-[10px] tracking-wider text-[#1a4a6e]/60">{h.tag}</span>
+                  <span className="mt-2 font-['Instrument_Serif'] text-xl text-[#1a4a6e]">{h.price}</span>
                 </button>
               ))}
             </div>
@@ -265,11 +256,11 @@ export function ItineraryBuilder() {
               type="button"
               onClick={generate}
               disabled={totalPicks === 0}
-              className="rounded-full bg-[#05c5d8] px-7 py-3.5 font-mono text-[12px] font-bold uppercase tracking-[0.25em] text-[#021726] transition-transform hover:scale-[1.03] disabled:cursor-not-allowed disabled:opacity-40"
+              className="bg-[#0c2340] px-7 py-3.5 font-['Work_Sans'] text-[12px] font-bold uppercase tracking-[0.2em] text-white transition-transform hover:scale-[1.03] disabled:cursor-not-allowed disabled:opacity-40"
             >
               ✦ Generate my day
             </button>
-            <span className="font-mono text-[11px] tracking-wider text-[#b9f6ff]/60">
+            <span className="font-['Work_Sans'] text-[11px] tracking-wider text-[#1a4a6e]/70">
               {totalPicks} stop{totalPicks === 1 ? "" : "s"} selected
             </span>
           </div>
@@ -277,11 +268,11 @@ export function ItineraryBuilder() {
       </div>
 
       {/* ------- RIGHT: generated timeline ------- */}
-      <div className="rounded-3xl border border-[#b9f6ff]/15 bg-gradient-to-b from-[#042a43]/60 to-[#021726]/80 p-6 backdrop-blur md:p-8">
+      <div className="border border-[#0c2340]/12 bg-[#0c2340] p-6 text-white md:p-8">
         <div className="flex items-center justify-between">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#05c5d8]">Your 1-day route</p>
+          <p className="font-['Work_Sans'] text-[11px] font-semibold uppercase tracking-[0.3em] text-[#5cbdb9]">Your 1-day route</p>
           {dayEnd && (
-            <span className="rounded-full border border-[#05c5d8]/40 px-3 py-1 font-mono text-[10px] tracking-widest text-[#b9f6ff]/80">
+            <span className="rounded-full border border-[#5cbdb9]/40 px-3 py-1 font-['Work_Sans'] text-[10px] tracking-widest text-white/80">
               6:30 AM → {dayEnd}
             </span>
           )}
@@ -297,9 +288,9 @@ export function ItineraryBuilder() {
               className="mt-10 flex flex-col items-center justify-center gap-3 py-16 text-center"
             >
               <span className="text-4xl">🧭</span>
-              <p className="max-w-xs text-sm text-[#b9f6ff]/60">
+              <p className="max-w-xs text-sm text-white/60">
                 Pick your beaches, spots and a place to stay, then hit{" "}
-                <span className="text-[#05c5d8]">Generate my day</span> to plot a timed coastal route.
+                <span className="text-[#5cbdb9]">Generate my day</span> to plot a timed coastal route.
               </p>
             </motion.div>
           ) : (
@@ -310,7 +301,7 @@ export function ItineraryBuilder() {
               variants={{ show: { transition: { staggerChildren: 0.07 } } }}
               className="relative mt-6 space-y-0 pl-2"
             >
-              <span className="absolute left-[14px] top-2 bottom-6 w-px bg-gradient-to-b from-[#05c5d8] via-[#b9f6ff]/30 to-transparent" />
+              <span className="absolute left-[14px] top-2 bottom-6 w-px bg-gradient-to-b from-[#5cbdb9] via-white/30 to-transparent" />
               {plan.map((s, i) => (
                 <motion.li
                   key={`${s.label}-${i}`}
@@ -322,22 +313,22 @@ export function ItineraryBuilder() {
                   className="relative flex gap-4 pb-5"
                 >
                   <span
-                    className="relative z-10 mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border bg-[#021726] text-sm"
+                    className="relative z-10 mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border bg-[#0c2340] text-sm"
                     style={{ borderColor: KIND_ACCENT[s.kind] }}
                   >
                     {s.icon}
                   </span>
                   <div className="flex-1">
                     <div className="flex items-baseline justify-between gap-3">
-                      <p className="font-display text-base font-bold text-[#eafcff]">{s.label}</p>
+                      <p className="font-['Instrument_Serif'] text-lg text-white">{s.label}</p>
                       <span
-                        className="shrink-0 font-mono text-[11px] font-bold tracking-wider"
-                        style={{ color: KIND_ACCENT[s.kind] }}
+                        className="shrink-0 font-['Work_Sans'] text-[11px] font-bold tracking-wider"
+                        style={{ color: KIND_ACCENT[s.kind] === "#1a4a6e" ? "#5cbdb9" : KIND_ACCENT[s.kind] }}
                       >
                         {s.time}
                       </span>
                     </div>
-                    <p className="mt-1 text-xs leading-relaxed text-[#b9f6ff]/70">{s.meta}</p>
+                    <p className="mt-1 text-xs leading-relaxed text-white/70">{s.meta}</p>
                   </div>
                 </motion.li>
               ))}
